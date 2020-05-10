@@ -10,8 +10,9 @@ app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 #from models import Manufactures, XrayTubes, User, Role, Tables
-from package.routes import *
 from package.models import *
+from package.routes import *
+
 #from package import Xraytubes, Manufactures
 # Admin #
 
@@ -29,22 +30,22 @@ class Homeadmin(AdminMixin,AdminIndexView):
     pass
 
 class Tubeadminview(AdminMixin,ModelView):
-    form_columns = ['manufacture', 'model', 'focus', 'capacity', 'coolingrate', 'servise_life']
+    form_columns = ['manufacture', 'tube_model', 'focus', 'capacity', 'coolingrate', 'servise_life']
 
 class Tableadminview(AdminMixin,ModelView):
-    form_columns = ['manufacture', 'name', 'horizont_range', 'max_weight']
+    form_columns = ['manufacture', 'table_name', 'horizont_range', 'max_weight']
 
 class Generatoradminview(AdminMixin,ModelView):
-    form_columns = ['manufacture', 'name', 'power', 'current', 'voltage']
+    form_columns = ['manufacture', 'generator_name', 'power', 'current', 'voltage']
 
 class Manufactureadminview(AdminMixin,ModelView):
-    form_columns = ['name', 'longname', 'country']
+    form_columns = ['manufacture_name', 'manufacture_longname', 'country']
 
 class Technoadminview(AdminMixin,ModelView):
-    form_columns = ['manufacture', 'name', 'text', 'category']
+    form_columns = ['manufacture', 'technology_name', 'technology_text', 'category']
 
 class Tomogadminview(AdminMixin,ModelView):
-    form_columns = ['manufacture', 'model', 'spiraltype', 'tubecount', 'gantry', 'slicecount', 'slice_thicness', 'fov_x',
+    form_columns = ['manufacture', 'tomog_model', 'spiraltype', 'tubecount', 'gantry', 'slicecount', 'slice_thicness', 'fov_x',
                     'fov_z', 'spatial_resolution', 'rotation_time', 'fps', 'generator', 'table', 'tube', 'room_size',
                     'performance', 'technologies']
 

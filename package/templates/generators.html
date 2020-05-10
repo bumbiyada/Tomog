@@ -1,0 +1,38 @@
+{% extends 'base.html'%}
+
+{% block title %}
+        generators
+{% endblock %}
+
+{% block content_title %}
+        about
+{% endblock %}
+
+{% block content %}
+<table class="table">
+          <thead>
+            <tr>
+              <th scope="col">manufacture</th>
+              <th scope="col">подразделение</th>
+              <th scope="col">модель генератора</th>
+              <th scope="col">Максимальный ток</th>
+              <th scope="col">Максимальный вольтаж</th>
+              <th scope="col">Мощность</th>
+              <th scope="col">страна производства</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for generator in generators %}
+                <tr>
+                    <td>{{ generator.manufacture_name }}</td>
+                    <td>{{ generator.manufacture_longname }}</td>
+                    <td>{{ generator.generator_name }}</td>
+                    <td>{{ generator.current }}</td>
+                    <td>{{ generator.voltage }}</td>
+                    <td>{{ generator.power }}</td>
+                    <td>{{ generator.country }}</td>
+                </tr>
+          </tbody>
+          {% endfor %}
+</table>
+{% endblock %}

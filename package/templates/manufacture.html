@@ -9,5 +9,22 @@
 {% endblock %}
 
 {% block content %}
-      Hi
+<table class="table">
+          <thead>
+            <tr>
+              <th scope="col">manufacture</th>
+              <th scope="col">подразделение</th>
+              <th scope="col">страна</th>
+            </tr>
+          </thead>
+          <tbody>
+              {% for manufacture in manufactures%}
+                    <tr>
+                        <td>{{ manufacture.manufacture_name }}</td>
+                        <td>{{ manufacture.manufacture_longname }}</td>
+                        <td>{{ manufacture.country }}</td>
+                    </tr>
+              {% endfor %}
+          </tbody>
+</table>
 {% endblock %}

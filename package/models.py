@@ -26,18 +26,21 @@ class Role(db.Model, RoleMixin):
 class Tubes(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     manufacture_id = db.Column(db.Integer, db.ForeignKey('manufactures.id'), nullable=False)
-    model = db.Column(db.String(128), nullable=False)
+    tube_model = db.Column(db.String(128), nullable=False)
     focus = db.Column(db.String(128))
     capacity = db.Column(db.Float())
     coolingrate = db.Column(db.Float())
     servise_life = db.Column(db.Integer())
     tomog = db.relationship('Tomog', backref='tube', lazy=True)
 
+    def __repr__(self):
+        return '{}'.format(self.tube_model)
+
 
 class Manufactures(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String(128), nullable=False)
-    longname = db.Column(db.String(255))
+    manufacture_name = db.Column(db.String(128), nullable=False)
+    manufacture_longname = db.Column(db.String(255))
     country = db.Column(db.String(128))
     tubes = db.relationship('Tubes', backref='manufacture', lazy=True)
     generators = db.relationship('Generator', backref='manufacture', lazy=True)
@@ -46,26 +49,32 @@ class Manufactures(db.Model):
     tomog = db.relationship('Tomog', backref='manufacture', lazy=True)
 
     def __repr__(self):
-        return '{}'.format(self.name)
+        return '{}'.format(self.manufacture_name)
 
 
 class Tables(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     manufacture_id = db.Column(db.Integer, db.ForeignKey('manufactures.id'), nullable=False)
-    name = db.Column(db.String(128), nullable=False)
+    table_name = db.Column(db.String(128), nullable=False)
     horizont_range = db.Column(db.Integer())
     max_weight = db.Column(db.Integer())
     tomog = db.relationship('Tomog', backref='table', lazy=True)
+
+    def __repr__(self):
+        return '{}'.format(self.table_name)
 
 
 class Generator(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     manufacture_id = db.Column(db.Integer, db.ForeignKey('manufactures.id'), nullable=False)
-    name = db.Column(db.String(128), nullable=False)
+    generator_name = db.Column(db.String(128), nullable=False)
     power = db.Column(db.Integer())
     current = db.Column(db.Integer())
     voltage = db.Column(db.Integer())
     tomog = db.relationship('Tomog', backref='generator', lazy=True)
+
+    def __repr__(self):
+        return '{}'.format(self.generator_name)
 
 tomog_techno = db.Table('tomog_techno',
                      db.Column('tomog_id', db.Integer, db.ForeignKey('tomog.id')),
@@ -76,21 +85,27 @@ tomog_techno = db.Table('tomog_techno',
 class Technologies(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     manufacture_id = db.Column(db.Integer, db.ForeignKey('manufactures.id'), nullable=False)
-    name = db.Column(db.String(128), nullable=False)
-    text = db.Column(db.Text)
+    technology_name = db.Column(db.String(128), nullable=False)
+    technology_text = db.Column(db.Text)
     category = db.Column(db.String(128))
+
+    def __repr__(self):
+        return '{}'.format(self.technology_name)
 
 
 class Hints(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String(128), nullable=False)
-    text = db.Column(db.Text)
+    hint_name = db.Column(db.String(128), nullable=False)
+    hint_text = db.Column(db.Text)
+
+    def __repr__(self):
+        return '{}'.format(self.hint_name)
 
 
 class Tomog(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     manufacture_id = db.Column(db.Integer, db.ForeignKey('manufactures.id'), nullable=False)
-    model = db.Column(db.String(128), nullable=False)
+    tomog_model = db.Column(db.String(128), nullable=False)
     spiraltype = db.Column(db.String(128))
     tubecount = db.Column(db.String(128))
     gantry = db.Column(db.Integer())

@@ -1,0 +1,40 @@
+{% extends 'base.html'%}
+
+{% block title %}
+        tubes
+{% endblock %}
+
+{% block content_title %}
+        about
+{% endblock %}
+
+{% block content %}
+      <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">manufacture</th>
+              <th scope="col">model</th>
+              <th scope="col">focus</th>
+              <th scope="col"><abbr title="mega heat unit, британская величина">MHU</abbr></th>
+              <th scope="col">охлаждение</th>
+              <th scope="col">срок службы</th>
+              <th scope="col">страна производства</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for tube in tubes %}
+          <tr>
+              <td>{{tube.manufacture_name}}</td>
+              <td>{{tube.manufacture_longname}}</td>
+              <td>{{tube.tube_model}}</td>
+              <td>{{tube.focus}}</td>
+              <td>{{tube.capacity}}</td>
+              <td>{{tube.coolingrate}}</td>
+              <td>{{tube.servise_life}}</td>
+              <td>{{tube.country}}</td>
+          </tr>
+          {% endfor%}
+          </tbody>
+      </table>
+{% endblock %}

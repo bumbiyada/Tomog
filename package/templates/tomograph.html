@@ -9,5 +9,33 @@
 {% endblock %}
 
 {% block content %}
-      HELLO,TOMO HERE
+<table class="table">
+          <thead>
+            <tr>
+              <th scope="col">manufacture</th>
+              <th scope="col">модель томографа</th>
+              <th scope="col">модель стола</th>
+              <th scope="col">горизонтальный диапазон</th>
+              <th scope="col">макс вес</th>
+              <th scope="col">страна производства</th>
+              <th scope="col">модель генератора</th>
+              <th scope="col">technology</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for tomog in tomographs %}
+                <tr>
+                    <td>{{ tomog.manufacture_name }}</td>
+                    <td>{{ tomog.tomog_model }}</td>
+                    <td>{{ tomog.table_name }}</td>
+                    <td>{{ tomog.horizont_range }}</td>
+                    <td>{{ tomog.max_weight }}</td>
+                    <td>{{ tomog.country }}</td>
+                    <td>{{ tomog.generator_name }}</td>
+                    <td>{{ tomog.technology_name_list }}</td>
+                </tr>
+          {% endfor %}
+          </tbody>
+
+</table>
 {% endblock %}
