@@ -5,9 +5,41 @@
 {% endblock %}
 
 {% block content_title %}
-        about
+<p class="h1">О проекте</p>
 {% endblock %}
 
 {% block content %}
-      about page
+<p>Проект подготовлен Свистуновом&nbsp;Максимом&nbsp;Алексеевичем, студентом "РТУ&nbsp;МИРЭА" Физико-Технологического&nbsp;института,
+    кафедры Оптических&nbsp;и&nbsp;Биотехнических&nbsp;систем&nbsp;и&nbsp;технологий</p>
+<h3>Контакты</h3>
+<ul>
+    <li><b>Телефон:</b>&nbsp;+79852187256</li>
+    <li><b>Почта:</b>&nbsp;bumbiyada@gmail.com</li>
+    <li><b>Вконтакте:</b>&nbsp;id_brainshooter</li>
+</ul>
+<p>
+  <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#about" aria-expanded="false" aria-controls="collapseExample">
+    Список использованного Програмного Обеспечения
+  </button>
+</p>
+<div class="collapse" id="about">
+  <div class="card card-body">
+      <ul>
+        <li><b>Язык программно-аппаратной части:</b>&nbsp;Python3.7</li>
+        <li><b>Веб-фреймворк:</b>&nbsp;Flask</li>
+        <li><b><abbr title="Object Relational Mapping, технология, связывающая БД с концепциями обьекто-ориентированных языков программирования">
+            ORM:</abbr></b>&nbsp;Flask-SQLAlchemy</li>
+        <li><b>База Данных:</b>&nbsp;SQLite</li>
+        <li><b>Кабинет Администратора:</b>&nbsp;Flask-Admin</li>
+        <li><b>Модуль Безопасности:</b>&nbsp;Flask-Sequrity</li>
+          <li><b>Стили и Скрипты <abbr title="Клиентская сторона пользовательского интерфейса">Frontend</abbr>:</b>&nbsp;Bootstrap 4</li>
+        <li><b>Программы для обработки Изображений:</b>&nbsp;Adobe Photoshop 6, Paint.Net, GIMP 2.10</li>
+          <li><b><abbr title="IDE">Интегрированная среда разработки</abbr>:</b>&nbsp;Jetbrains PyCharm</li>
+        <li><b>Операционная система:</b>&nbsp;Fedora 29</li>
+        <li><b>Интернет Браузер:</b>&nbsp;Firefox, Opera</li>
+        <li><b>Программа для онлайн Тестирования системы:</b>&nbsp;Ngrok</li>
+        <li><b>Система Управления Версиями:</b>&nbsp;Github</li>
+      </ul>
+  </div>
+</div>
 {% endblock %}

@@ -5,15 +5,21 @@
 {% endblock %}
 
 {% block content_title %}
-        about
+<p class="h1">Столы</p>
+<div class="btn-group mx-auto" role="group" aria-label="Basic example">
+  <a href="/tomograph" class="btn btn-secondary" role="button">Томографы</a>
+  <a href="/manufacture" class="btn btn-secondary" role="button">Производители</a>
+  <a href="/tubes" class="btn btn-secondary" role="button">Трубки</a>
+  <a href="/generators" class="btn btn-secondary" role="button">Генераторы</a>
+  <a href="/tables" class="btn btn-secondary" role="button">Столы</a>
+</div>
 {% endblock %}
 
 {% block content %}
 <table class="table">
           <thead>
             <tr>
-              <th scope="col">manufacture</th>
-              <th scope="col">подразделение</th>
+              <th scope="col">Производитель</th>
               <th scope="col">модель стола</th>
               <th scope="col">горизонтальный диапазон</th>
               <th scope="col">макс вес</th>
@@ -24,35 +30,12 @@
           {% for table in tables %}
                 <tr>
                     <td>{{ table.manufacture_name }}</td>
-                    <td>{{ table.manufacture_longname }}</td>
                     <td>{{ table.table_name }}</td>
                     <td>{{ table.horizont_range }}</td>
                     <td>{{ table.max_weight }}</td>
                     <td>{{ table.country }}</td>
-                    <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{ table.table_name }}">Launch demo modal</button></td>
                 </tr>
           </tbody>
           {% endfor %}
 </table>
-{% for table in tables %}
-<div class="modal fade" id="exampleModal{{ table.table_name }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{ table.table_name }}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        {{ table.horizont_range }}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-{% endfor %}
 {% endblock %}

@@ -5,16 +5,38 @@
 {% endblock %}
 
 {% block content_title %}
-Технологии
+<p class="h1">Технологии</p>
 {% endblock %}
 
 {% block content %}
-<div>
-{% for technology in technologies%}
-    <p class="h2">{{technology.technology_name}}</p>
-    <p class="h3 text-right">{{technology.manufacture_name}}</p><br>
-    <p>{{technology.technology_text}}</p><br>
 
-{% endfor %}
+<div class="row">
+  <nav id="navbar-example3" class="navbar navbar-light bg-light col-sm-2">
+    {% for manufacture in manufactures %}
+    <nav class="nav nav-pills flex-column">
+      <a class="nav-link" href="#{{ manufacture.manufacture_name }}">{{ manufacture.manufacture_name }}</a>
+      {% for technology in technologies %}
+        {% if manufacture.manufacture_name == technology.manufacture_name %}
+        <nav class="nav nav-pills flex-column">
+          <a class="nav-link ml-3 my-1" href="#{{ technology.technology_name }}">{{ technology.technology_name }}</a>
+        </nav>
+        {% endif %}
+      {% endfor %}
+    </nav>
+    {% endfor %}
+  </nav>
+
+  <div data-spy="scroll" class="col-sm-10" data-target="#navbar-example3" data-offset="0">
+    {% for manufacture in manufactures %}
+      <h3 id="{{ manufacture.manufacture_name }}">{{ manufacture.manufacture_name }}</h3>
+      {% for technology in technologies %}
+        {% if manufacture.manufacture_name == technology.manufacture_name %}
+    <h5 id="{{ technology.technology_name }}"><b>{{ technology.technology_name }}</b></h5>
+          <p>{{ technology.technology_text }}</p>
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+  </div>
 </div>
+
 {% endblock %}

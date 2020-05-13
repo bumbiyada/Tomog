@@ -5,9 +5,12 @@
 {% endblock %}
 
 {% block content_title %}
-        about
+<p class="h1">Термины</p>
 {% endblock %}
 
 {% block content %}
-      about page
+{% for hint in hints %}
+    <h5><b>{{ hint.hint_name }}</b></h5>
+    <p style="text-indent:20px;">{{ hint.hint_text }}</p>
+{% endfor%}
 {% endblock %}

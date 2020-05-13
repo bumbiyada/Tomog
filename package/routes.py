@@ -1,7 +1,7 @@
-from flask import render_template
+from flask import render_template, request
 
 from package import app, db
-from package.models import Tubes, Tables, Manufactures, Tomog, Generator, Technologies, tomog_techno
+from package.models import Tubes, Tables, Manufactures, Tomog, Generator, Technologies, tomog_techno, Hints, Image
 
 
 @app.route('/', methods=['GET'])
@@ -15,7 +15,11 @@ def about():
 @app.route('/tomograph', methods=['GET'])
 def tomograph():
     return render_template('tomograph.html', tomographs=db.session.query(Tomog.tomog_model, Manufactures.manufacture_name,
-                           Tables.table_name, Tables.horizont_range,Tables.max_weight, Manufactures.country, Generator.generator_name,
+                           Tables.table_name, Tables.horizont_range,Tomog.slicecount,Tomog.spiraltype, Tables.max_weight,
+                            Manufactures.country, Generator.generator_name, Tomog.tubecount, Tomog.gantry, Tomog.fov_x, Tomog.fov_z,
+                            Tomog.fps, Tomog.slice_thicness, Tomog.spatial_resolution, Tomog.rotation_time, Tomog.room_size,
+                            Tomog.performance, Generator.power, Generator.current, Generator.voltage, Manufactures.manufacture_longname,
+                            Tubes.tube_model, Tubes.focus, Tubes.capacity, Tubes.coolingrate, Tubes.servise_life,
                            db.func.group_concat(Technologies.technology_name).label('technology_name_list'))\
                            .join(Manufactures, Tomog.manufacture_id==Manufactures.id)\
                            .join(Tables, Tomog.table_id==Tables.id)\
@@ -50,9 +54,15 @@ def tables():
 
 @app.route('/hints', methods=['GET'])
 def hints():
-    return render_template('hints.html')
+    return render_template('hints.html',hints=Hints.query.all())
 
 @app.route('/technologies', methods=['GET'])
 def technologies():
-    return render_template('technologies.html', technologies=Technologies.query.join(Manufactures, Technologies.manufacture_id==Manufactures.id)\
+    return render_template('technologies.html', manufactures=Manufactures.query.add_columns(Manufactures.manufacture_name).all(),
+                           technologies=Technologies.query.join(Manufactures, Technologies.manufacture_id==Manufactures.id)\
                            .add_columns(Manufactures.manufacture_name, Technologies.technology_name, Technologies.technology_text).all())
+
+@app.route('/compare', methods=['GET'])
+def compare():
+
+    return render_template('compare.html')

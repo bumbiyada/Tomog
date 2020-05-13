@@ -122,3 +122,16 @@ class Tomog(db.Model):
     generator_id = db.Column(db.Integer, db.ForeignKey('generator.id'), nullable=False)
     table_id = db.Column(db.Integer, db.ForeignKey('tables.id'), nullable=False)
     technologies = db.relationship('Technologies', secondary=tomog_techno, backref=db.backref('tomog', lazy='dynamic'))
+    image_id = db.Column(db.Integer, db.ForeignKey('image.id'))
+
+class Image(db.Model):
+
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.Unicode(64), nullable=False)
+    path = db.Column(db.Unicode(128), nullable=False)
+    tomograph = db.relationship('Tomog', backref='image', lazy=True)
+
+    def __unicode__(self):
+        return self.name
+    def __repr__(self):
+        return '{}'.format(self.name)

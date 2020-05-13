@@ -5,16 +5,23 @@
 {% endblock %}
 
 {% block content_title %}
-        Manufacture
+<p class="h1"> Производители</p>
+<div class="btn-group mx-auto" role="group" aria-label="Basic example">
+  <a href="/tomograph" class="btn btn-secondary" role="button">Томографы</a>
+  <a href="/manufacture" class="btn btn-secondary" role="button">Производители</a>
+  <a href="/tubes" class="btn btn-secondary" role="button">Трубки</a>
+  <a href="/generators" class="btn btn-secondary" role="button">Генераторы</a>
+  <a href="/tables" class="btn btn-secondary" role="button">Столы</a>
+</div>
 {% endblock %}
 
 {% block content %}
 <table class="table">
           <thead>
             <tr>
-              <th scope="col">manufacture</th>
-              <th scope="col">подразделение</th>
-              <th scope="col">страна</th>
+              <th scope="col">Производитель</th>
+              <th scope="col">Подразделение</th>
+              <th scope="col">Страна</th>
             </tr>
           </thead>
           <tbody>

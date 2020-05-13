@@ -5,37 +5,165 @@
 {% endblock %}
 
 {% block content_title %}
-        tom
+<p class="h1">Томографы</p>
+<div class="btn-group mx-auto" role="group" aria-label="Basic example">
+  <a href="/tomograph" class="btn btn-secondary" role="button">Томографы</a>
+  <a href="/manufacture" class="btn btn-secondary" role="button">Производители</a>
+  <a href="/tubes" class="btn btn-secondary" role="button">Трубки</a>
+  <a href="/generators" class="btn btn-secondary" role="button">Генераторы</a>
+  <a href="/tables" class="btn btn-secondary" role="button">Столы</a>
+</div>
 {% endblock %}
 
 {% block content %}
 <table class="table">
           <thead>
             <tr>
-              <th scope="col">manufacture</th>
-              <th scope="col">модель томографа</th>
-              <th scope="col">модель стола</th>
-              <th scope="col">горизонтальный диапазон</th>
-              <th scope="col">макс вес</th>
-              <th scope="col">страна производства</th>
-              <th scope="col">модель генератора</th>
-              <th scope="col">technology</th>
+              <th scope="col">Производитель</th>
+              <th scope="col">Подразделение</th>
+              <th scope="col">Модель томографа</th>
+              <th scope="col">Количество срезов</th>
+              <th scope="col">Страна производства</th>
+              <th scope="col"> </th>
+
             </tr>
           </thead>
           <tbody>
           {% for tomog in tomographs %}
                 <tr>
                     <td>{{ tomog.manufacture_name }}</td>
+                    <td>{{ tomog.manufacture_longname }}</td>
                     <td>{{ tomog.tomog_model }}</td>
-                    <td>{{ tomog.table_name }}</td>
-                    <td>{{ tomog.horizont_range }}</td>
-                    <td>{{ tomog.max_weight }}</td>
+                    <td>{{ tomog.slicecount }}</td>
                     <td>{{ tomog.country }}</td>
-                    <td>{{ tomog.generator_name }}</td>
-                    <td>{{ tomog.technology_name_list }}</td>
+                    <td><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#tomogmodal{{ tomog.tomog_model }}">подробнее</button></td>
                 </tr>
           {% endfor %}
           </tbody>
 
 </table>
+
+{% for tomog in tomographs %}
+<div class="modal fade" id="tomogmodal{{ tomog.tomog_model }}" tabindex="-1" role="dialog" aria-labelledby="tomoglabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="tomoglabel">{{ tomog.manufacture_name }}&nbsp;{{ tomog.tomog_model }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Вид томографии</th>
+              <th scope="col">Количество трубок</th>
+              <th scope="col">Диаметр Гентри</th>
+              <th scope="col">Мин. площадь помещения</th>
+              <th scope="col">Производительность</th>
+            </tr>
+          </thead>
+          <tbody>
+                <tr>
+                    <td>{{ tomog.spiraltype }}</td>
+                    <td>{{ tomog.tubecount }}</td>
+                    <td>{{ tomog.gantry }}</td>
+                    <td>{{ tomog.room_size }}</td>
+                    <td>{{ tomog.performance }}</td>
+                </tr>
+          </tbody>
+          </table>
+          <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Количество срезов</th>
+              <th scope="col">Толщина срезов</th>
+              <th scope="col">FOV </th>
+              <th scope="col">FOV ось-Z</th>
+              <th scope="col">Время вращения трубки</th>
+              <th scope="col">FPS</th>
+              <th scope="col">Пространственное разрешение</th>
+            </tr>
+          </thead>
+          <tbody>
+                <tr>
+                    <td>{{ tomog.slicecount }}</td>
+                    <td>{{ tomog.slice_thicness }}</td>
+                    <td>{{ tomog.fov_x }}</td>
+                    <td>{{ tomog.fov_z }}</td>
+                    <td>{{ tomog.rotation_time }}</td>
+                    <td>{{ tomog.fps }}</td>
+                    <td>{{ tomog.spatial_resolution }}</td>
+                </tr>
+          </tbody>
+          </table>
+          <p><b>Технологии: </b></p>
+          <p>{{ tomog.technology_name_list }}</p>
+          <p><b>Характеристики Генератора</b></p>
+          <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Название генератора</th>
+              <th scope="col">Мощность</th>
+              <th scope="col">Макс. Ток</th>
+              <th scope="col">Макс. Напряжение</th>
+            </tr>
+          </thead>
+          <tbody>
+                <tr>
+                    <td>{{ tomog.generator_name }}</td>
+                    <td>{{ tomog.power }}</td>
+                    <td>{{ tomog.current }}</td>
+                    <td>{{ tomog.voltage }}</td>
+                </tr>
+          </tbody>
+          </table>
+          <p><b>Характеристики стола</b></p>
+          <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Название стола</th>
+              <th scope="col">Горизонтальный диапазон</th>
+              <th scope="col">Макс. Вес пациента</th>
+            </tr>
+          </thead>
+          <tbody>
+                <tr>
+                    <td>{{ tomog.table_name }}</td>
+                    <td>{{ tomog.horizont_range }}</td>
+                    <td>{{ tomog.max_weight }}</td>
+                </tr>
+          </tbody>
+          </table>
+          <p><b>Характеристики трубки</b></p>
+          <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Название трубки</th>
+              <th scope="col">Фокус трубки</th>
+              <th scope="col">MHU </th>
+              <th scope="col">kHU/min</th>
+              <th scope="col">Срок службы</th>
+            </tr>
+          </thead>
+          <tbody>
+                <tr>
+                    <td>{{ tomog.tube_model }}</td>
+                    <td>{{ tomog.focus }}</td>
+                    <td>{{ tomog.capacity }}</td>
+                    <td>{{ tomog.coolingrate }}</td>
+                    <td>{{ tomog.servise_life }}</td>
+                </tr>
+          </tbody>
+          </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
 {% endblock %}
