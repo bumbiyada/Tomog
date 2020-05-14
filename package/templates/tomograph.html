@@ -12,6 +12,9 @@
   <a href="/tubes" class="btn btn-secondary" role="button">Трубки</a>
   <a href="/generators" class="btn btn-secondary" role="button">Генераторы</a>
   <a href="/tables" class="btn btn-secondary" role="button">Столы</a>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Фильтры
+  </button>
 </div>
 {% endblock %}
 
@@ -19,6 +22,7 @@
 <table class="table">
           <thead>
             <tr>
+              <th scope="col">Фото</th>
               <th scope="col">Производитель</th>
               <th scope="col">Подразделение</th>
               <th scope="col">Модель томографа</th>
@@ -31,6 +35,7 @@
           <tbody>
           {% for tomog in tomographs %}
                 <tr>
+                    <td><img class="thumbnail" style="height:50px;widht:50px" src="/static/{{ tomog.path }}"></td>
                     <td>{{ tomog.manufacture_name }}</td>
                     <td>{{ tomog.manufacture_longname }}</td>
                     <td>{{ tomog.tomog_model }}</td>
@@ -164,6 +169,48 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Фильтр</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="/tomograph_filter">
+            <div class="form-group form-check">
+                <ul>
+                {% for manufacture in manufactures %}
+                <li><input type="checkbox" name="{{manufacture.manufacture_name}}" class="form-check-input" id="{{manufacture.manufacture_name}}">
+                <label class="form-check-label" for="{{manufacture.manufacture_name}}">{{manufacture.manufacture_name}}</label></li>
+                </ul>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">Применить фильтр</button>
+
+            </div>
+
+
+
+
+
+
+        </form>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+        <button type="button" class="btn btn-primary">Применить фильтр</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 {% endfor %}
 
 {% endblock %}

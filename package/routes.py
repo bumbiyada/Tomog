@@ -14,12 +14,12 @@ def about():
 
 @app.route('/tomograph', methods=['GET'])
 def tomograph():
-    return render_template('tomograph.html', tomographs=db.session.query(Tomog.tomog_model, Manufactures.manufacture_name,
+    return render_template('tomograph.html', manufactures=db.session.query(Manufactures.manufacture_name).all(), tomographs=db.session.query(Tomog.tomog_model, Manufactures.manufacture_name,
                            Tables.table_name, Tables.horizont_range,Tomog.slicecount,Tomog.spiraltype, Tables.max_weight,
                             Manufactures.country, Generator.generator_name, Tomog.tubecount, Tomog.gantry, Tomog.fov_x, Tomog.fov_z,
                             Tomog.fps, Tomog.slice_thicness, Tomog.spatial_resolution, Tomog.rotation_time, Tomog.room_size,
                             Tomog.performance, Generator.power, Generator.current, Generator.voltage, Manufactures.manufacture_longname,
-                            Tubes.tube_model, Tubes.focus, Tubes.capacity, Tubes.coolingrate, Tubes.servise_life,
+                            Tubes.tube_model, Tubes.focus, Tubes.capacity, Tubes.coolingrate, Tubes.servise_life, Image.name, Image.path,
                            db.func.group_concat(Technologies.technology_name).label('technology_name_list'))\
                            .join(Manufactures, Tomog.manufacture_id==Manufactures.id)\
                            .join(Tables, Tomog.table_id==Tables.id)\
@@ -27,7 +27,59 @@ def tomograph():
                            .join(Tubes, Tomog.tube_id==Tubes.id)\
                            .join(tomog_techno, Tomog.id==tomog_techno.c.tomog_id)\
                            .join(Technologies, tomog_techno.c.techno_id==Technologies.id)\
+                           .join(Image, Tomog.image_id==Image.id)
                            .group_by(Tomog.id))
+
+@app.route('/tomograph_filter', methods=['GET','POST'])
+def tomograph_filter():
+    manufacturers = Manufactures.query.all()  # получаем из БД все неймы Производителей
+    mas = []
+    for i in range(Manufactures.query.count()):
+        if request.form.get(str(manufacturers[i]))==str("on"):
+            #print(manufacturers[i])
+            mas.append(manufacturers[i])
+        #print(str(manufacturers[i]))
+        #print(str(request.form.get('siemens')))
+        #print(request.form.get(str(manufacturers[i])))
+    print(x for x in request.form.keys())
+    print(list(request.form.keys()))
+    print(request.form)
+    print(request.form.keys())
+    print(request.form.__dict__)
+    masss = list(request.form.keys())
+    #print(mas)
+    #print(type(mas))
+    #print(len(mas))
+    mass = ''.join(str(mas))
+    #print(mass)
+    #print(type(mass))
+    s = 'siemens'
+    d = 'GE'
+    """
+    
+    manufacture_count = Manufactures.query.count() #Узнаем количество этих неймов
+    for i in int(manufacture_count) - 1:  #цикл
+        if request.form.get[manufacturers[i]]=='on': #если на фронте в форме мы тыкнули галочку I-ного Производителя то
+            mas.append(manufacturers[i]) #Добавляем к нашей строке Этого производителя
+        print(mas[i])     # Принтуем для удобности
+    """
+
+    return render_template('tomograph.html', manufactures=manufacturers, tomographs=db.session.query(Tomog.tomog_model, Manufactures.manufacture_name,
+                           Tables.table_name, Tables.horizont_range,Tomog.slicecount,Tomog.spiraltype, Tables.max_weight,
+                            Manufactures.country, Generator.generator_name, Tomog.tubecount, Tomog.gantry, Tomog.fov_x, Tomog.fov_z,
+                            Tomog.fps, Tomog.slice_thicness, Tomog.spatial_resolution, Tomog.rotation_time, Tomog.room_size,
+                            Tomog.performance, Generator.power, Generator.current, Generator.voltage, Manufactures.manufacture_longname,
+                            Tubes.tube_model, Tubes.focus, Tubes.capacity, Tubes.coolingrate, Tubes.servise_life, Image.name, Image.path,
+                           db.func.group_concat(Technologies.technology_name).label('technology_name_list'))\
+                           .join(Manufactures, Tomog.manufacture_id==Manufactures.id)\
+                           .join(Tables, Tomog.table_id==Tables.id)\
+                           .join(Generator, Tomog.generator_id==Generator.id)\
+                           .join(Tubes, Tomog.tube_id==Tubes.id)\
+                           .join(tomog_techno, Tomog.id==tomog_techno.c.tomog_id)\
+                           .join(Technologies, tomog_techno.c.techno_id==Technologies.id)\
+                           .join(Image, Tomog.image_id==Image.id)
+                           .group_by(Tomog.id).filter(Manufactures.manufacture_name.in_(masss)))
+
 
 
 @app.route('/manufacture', methods=['GET'])

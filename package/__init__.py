@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 
-file_path = op.join(op.dirname(__file__), 'static/image')
+file_path = op.join(op.dirname(__file__), 'static')
 try:
     os.mkdir(file_path)
 except OSError:
