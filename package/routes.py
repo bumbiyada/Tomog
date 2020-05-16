@@ -1,5 +1,5 @@
 from flask import render_template, request
-
+#from sqlalchemy import True_
 from package import app, db
 from package.models import Tubes, Tables, Manufactures, Tomog, Generator, Technologies, tomog_techno, Hints, Image
 
@@ -37,6 +37,8 @@ def tomograph_filter():
     print(masss)
     srez_l = request.form.get('srez_l')
     srez_h = request.form.get('srez_h')
+    country = request.form.get('country')
+    print(country)
     return render_template('tomograph.html', manufactures=manufacturers, tomographs=db.session.query(Tomog.tomog_model, Manufactures.manufacture_name,
                            Tables.table_name, Tables.horizont_range,Tomog.slicecount,Tomog.spiraltype, Tables.max_weight,
                             Manufactures.country, Tomog.id, Generator.generator_name, Tomog.tubecount, Tomog.gantry, Tomog.fov_x, Tomog.fov_z,
@@ -51,7 +53,8 @@ def tomograph_filter():
                            .join(tomog_techno, Tomog.id==tomog_techno.c.tomog_id)\
                            .join(Technologies, tomog_techno.c.techno_id==Technologies.id)\
                            .join(Image, Tomog.image_id==Image.id)
-                           .group_by(Tomog.id).filter(Manufactures.manufacture_name.in_(masss)).filter(Tomog.tubecount.in_(masss)).filter(Tomog.slicecount >=int(srez_l), Tomog.slicecount <=int(srez_h)))
+                           .group_by(Tomog.id).filter(Manufactures.manufacture_name.in_(masss)).filter(Tomog.tubecount.in_(masss))\
+                           .filter(True if country == 'vse' else Manufactures.country == str(country)).filter(Tomog.slicecount >=int(srez_l), Tomog.slicecount <=int(srez_h)))
 
 
 

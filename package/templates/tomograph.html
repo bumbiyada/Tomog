@@ -7,7 +7,7 @@
 {% block content_title %}
 <p class="h1">Томографы</p>
 <div class="btn-group mx-auto" role="group" aria-label="Basic example">
-  <a href="/tomograph" class="btn btn-secondary" role="button">Томографы</a>
+  <a href="/tomograph" class="btn btn-secondary active" role="button">Томографы</a>
   <a href="/manufacture" class="btn btn-secondary" role="button">Производители</a>
   <a href="/tubes" class="btn btn-secondary" role="button">Трубки</a>
   <a href="/generators" class="btn btn-secondary" role="button">Генераторы</a>
@@ -199,8 +199,9 @@
                                 <li>до<input type="number" value=1024 name="srez_h" class="form-control" id="srez_h">
                                 <label class="form-check-label" for="srez_h"></label></li>
                             </ul>
+
                         </div>
-                        <div class="col-3">
+                        <div class="col-5">
                             <h4><b>Количество трубок</b></h4>
                             <ul>
                                 <li><input type="checkbox" name="однотрубочный" class="form-check-input" checked id="trub1">
@@ -209,6 +210,17 @@
                                 <label class="form-check-label" for="trub2">двухтрубочный</label></li>
 
                             </ul>
+                            <h4><b>Страна производства</b></h4>
+                            <div class="form-group">
+                                <label for="inputState"></label>
+                                <select name="country" id="inputState" class="form-control">
+                                    <option value="vse" selected>Все</option>
+                                    <option value="США">США</option>
+                                    <option value="Германия">Германия</option>
+                                    <option value="Китай">Китай</option>
+                                    <option value="Нидерланды">Нидерланды</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
           </div>
