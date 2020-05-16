@@ -16,7 +16,7 @@ def about():
 def tomograph():
     return render_template('tomograph.html', manufactures=db.session.query(Manufactures.manufacture_name).all(), tomographs=db.session.query(Tomog.tomog_model, Manufactures.manufacture_name,
                            Tables.table_name, Tables.horizont_range,Tomog.slicecount,Tomog.spiraltype, Tables.max_weight,
-                            Manufactures.country, Generator.generator_name, Tomog.tubecount, Tomog.gantry, Tomog.fov_x, Tomog.fov_z,
+                            Manufactures.country, Tomog.id, Generator.generator_name, Tomog.tubecount, Tomog.gantry, Tomog.fov_x, Tomog.fov_z,
                             Tomog.fps, Tomog.slice_thicness, Tomog.spatial_resolution, Tomog.rotation_time, Tomog.room_size,
                             Tomog.performance, Generator.power, Generator.current, Generator.voltage, Manufactures.manufacture_longname,
                             Tubes.tube_model, Tubes.focus, Tubes.capacity, Tubes.coolingrate, Tubes.servise_life, Image.name, Image.path,
@@ -39,7 +39,7 @@ def tomograph_filter():
     srez_h = request.form.get('srez_h')
     return render_template('tomograph.html', manufactures=manufacturers, tomographs=db.session.query(Tomog.tomog_model, Manufactures.manufacture_name,
                            Tables.table_name, Tables.horizont_range,Tomog.slicecount,Tomog.spiraltype, Tables.max_weight,
-                            Manufactures.country, Generator.generator_name, Tomog.tubecount, Tomog.gantry, Tomog.fov_x, Tomog.fov_z,
+                            Manufactures.country, Tomog.id, Generator.generator_name, Tomog.tubecount, Tomog.gantry, Tomog.fov_x, Tomog.fov_z,
                             Tomog.fps, Tomog.slice_thicness, Tomog.spatial_resolution, Tomog.rotation_time, Tomog.room_size,
                             Tomog.performance, Generator.power, Generator.current, Generator.voltage, Manufactures.manufacture_longname,
                             Tubes.tube_model, Tubes.focus, Tubes.capacity, Tubes.coolingrate, Tubes.servise_life, Image.name, Image.path,

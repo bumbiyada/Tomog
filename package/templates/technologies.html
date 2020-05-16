@@ -11,7 +11,7 @@
 {% block content %}
 
 <div class="row">
-  <nav id="navbar-example3" class="navbar navbar-light bg-light col-sm-2">
+  <nav id="navbar-example3" class="navbar navbar-light flex-column bg-light justify-content-start col-2">
     {% for manufacture in manufactures %}
     <nav class="nav nav-pills flex-column">
       <a class="nav-link" href="#{{ manufacture.manufacture_name }}">{{ manufacture.manufacture_name }}</a>
@@ -26,7 +26,7 @@
     {% endfor %}
   </nav>
 
-  <div data-spy="scroll" class="col-sm-10" data-target="#navbar-example3" data-offset="0">
+  <div data-spy="scroll" class="col-10" data-target="#navbar-example3" data-offset="0">
     {% for manufacture in manufactures %}
       <h3 id="{{ manufacture.manufacture_name }}">{{ manufacture.manufacture_name }}</h3>
       {% for technology in technologies %}

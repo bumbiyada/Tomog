@@ -1,7 +1,7 @@
 {% extends 'base.html'%}
 
 {% block title %}
-        tomo
+        ct
 {% endblock %}
 
 {% block content_title %}
@@ -12,7 +12,7 @@
   <a href="/tubes" class="btn btn-secondary" role="button">Трубки</a>
   <a href="/generators" class="btn btn-secondary" role="button">Генераторы</a>
   <a href="/tables" class="btn btn-secondary" role="button">Столы</a>
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#filterModal">
   Фильтры
   </button>
 </div>
@@ -41,7 +41,7 @@
                     <td>{{ tomog.tomog_model }}</td>
                     <td>{{ tomog.slicecount }}</td>
                     <td>{{ tomog.country }}</td>
-                    <td><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#tomogmodal{{ tomog.tomog_model }}">подробнее</button></td>
+                    <td><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#l{{ tomog.id }}">подробнее</button></td>
                 </tr>
           {% endfor %}
           </tbody>
@@ -49,11 +49,11 @@
 </table>
 
 {% for tomog in tomographs %}
-<div class="modal fade" id="tomogmodal{{ tomog.tomog_model }}" tabindex="-1" role="dialog" aria-labelledby="tomoglabel" aria-hidden="true">
+<div class="modal fade" id="l{{ tomog.id }}" tabindex="-1" role="dialog" aria-labelledby="la{{ tomog.id }}tomoglabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="tomoglabel">{{ tomog.manufacture_name }}&nbsp;{{ tomog.tomog_model }}</h5>
+        <h5 class="modal-title" id="la{{ tomog.id }}tomoglabel">{{ tomog.manufacture_name }}&nbsp;{{ tomog.tomog_model }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -64,9 +64,9 @@
             <tr>
               <th scope="col">Вид томографии</th>
               <th scope="col">Количество трубок</th>
-              <th scope="col">Диаметр Гентри</th>
-              <th scope="col">Мин. площадь помещения</th>
-              <th scope="col">Производительность</th>
+              <th scope="col">Диаметр Гентри (см)</th>
+              <th scope="col">Мин. площадь помещения (м&sup2;)</th>
+              <th scope="col">Производительность (мм/сек)</th>
             </tr>
           </thead>
           <tbody>
@@ -83,12 +83,12 @@
           <thead>
             <tr>
               <th scope="col">Количество срезов</th>
-              <th scope="col">Толщина срезов</th>
-              <th scope="col">FOV </th>
+              <th scope="col">Толщина срезов (мм)</th>
+              <th scope="col">FOV (см)</th>
               <th scope="col">FOV ось-Z</th>
-              <th scope="col">Время вращения трубки</th>
+              <th scope="col">Время вращения трубки (сек)</th>
               <th scope="col">FPS</th>
-              <th scope="col">Пространственное разрешение</th>
+              <th scope="col">Пространственное разрешение (мм&sup2;)</th>
             </tr>
           </thead>
           <tbody>
@@ -110,9 +110,9 @@
           <thead>
             <tr>
               <th scope="col">Название генератора</th>
-              <th scope="col">Мощность</th>
-              <th scope="col">Макс. Ток</th>
-              <th scope="col">Макс. Напряжение</th>
+              <th scope="col">Мощность (кВт)</th>
+              <th scope="col">Макс. Ток (мА)</th>
+              <th scope="col">Макс. Напряжение (кВ)</th>
             </tr>
           </thead>
           <tbody>
@@ -129,8 +129,8 @@
           <thead>
             <tr>
               <th scope="col">Название стола</th>
-              <th scope="col">Горизонтальный диапазон</th>
-              <th scope="col">Макс. Вес пациента</th>
+              <th scope="col">Горизонтальный диапазон (см)</th>
+              <th scope="col">Макс. Вес пациента (кг)</th>
             </tr>
           </thead>
           <tbody>
@@ -147,9 +147,9 @@
             <tr>
               <th scope="col">Название трубки</th>
               <th scope="col">Фокус трубки</th>
-              <th scope="col">MHU </th>
-              <th scope="col">kHU/min</th>
-              <th scope="col">Срок службы</th>
+              <th scope="col">Теплоемкость (MHU) </th>
+              <th scope="col">Охлаждение (kHU/min)</th>
+              <th scope="col">Срок службы (сек)</th>
             </tr>
           </thead>
           <tbody>
@@ -170,11 +170,11 @@
   </div>
 </div>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Фильтр</h5>
+        <h5 class="modal-title" id="filterModalLabel">Фильтр</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -186,8 +186,8 @@
                             <h4><b>Производители</b></h4>
                             <ul>
                                 {% for manufacture in manufactures %}
-                                <li><input type="checkbox" name="{{manufacture.manufacture_name}}" class="form-check-input" id="{{manufacture.manufacture_name}} " checked>
-                                <label class="form-check-label" for="{{manufacture.manufacture_name}}">{{manufacture.manufacture_name}}</label></li>
+                                <li><input type="checkbox" name="{{manufacture.manufacture_name}}" class="form-check-input" id="toto{{manufacture.manufacture_name}} " checked>
+                                <label class="form-check-label" for="toto{{ manufacture.manufacture_name }}">{{manufacture.manufacture_name}}</label></li>
                                 {% endfor %}
                             </ul>
                         </div>

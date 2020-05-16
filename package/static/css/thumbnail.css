@@ -3,7 +3,7 @@ transform: scale(10);
 -moz-transform-origin: top left;
 -o-transform-origin:top left;
 -webkit-transform-origin:top left;
-transition:0.25s;
+transition:0.6s;
 }
 tr:last-of-type .thumbnail:hover {
     -moz-transform-origin: bottom left;
