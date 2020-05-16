@@ -33,37 +33,10 @@ def tomograph():
 @app.route('/tomograph_filter', methods=['GET','POST'])
 def tomograph_filter():
     manufacturers = Manufactures.query.all()  # получаем из БД все неймы Производителей
-    mas = []
-    for i in range(Manufactures.query.count()):
-        if request.form.get(str(manufacturers[i]))==str("on"):
-            #print(manufacturers[i])
-            mas.append(manufacturers[i])
-        #print(str(manufacturers[i]))
-        #print(str(request.form.get('siemens')))
-        #print(request.form.get(str(manufacturers[i])))
-    print(x for x in request.form.keys())
-    print(list(request.form.keys()))
-    print(request.form)
-    print(request.form.keys())
-    print(request.form.__dict__)
     masss = list(request.form.keys())
-    #print(mas)
-    #print(type(mas))
-    #print(len(mas))
-    mass = ''.join(str(mas))
-    #print(mass)
-    #print(type(mass))
-    s = 'siemens'
-    d = 'GE'
-    """
-    
-    manufacture_count = Manufactures.query.count() #Узнаем количество этих неймов
-    for i in int(manufacture_count) - 1:  #цикл
-        if request.form.get[manufacturers[i]]=='on': #если на фронте в форме мы тыкнули галочку I-ного Производителя то
-            mas.append(manufacturers[i]) #Добавляем к нашей строке Этого производителя
-        print(mas[i])     # Принтуем для удобности
-    """
-
+    print(masss)
+    srez_l = request.form.get('srez_l')
+    srez_h = request.form.get('srez_h')
     return render_template('tomograph.html', manufactures=manufacturers, tomographs=db.session.query(Tomog.tomog_model, Manufactures.manufacture_name,
                            Tables.table_name, Tables.horizont_range,Tomog.slicecount,Tomog.spiraltype, Tables.max_weight,
                             Manufactures.country, Generator.generator_name, Tomog.tubecount, Tomog.gantry, Tomog.fov_x, Tomog.fov_z,
@@ -78,7 +51,7 @@ def tomograph_filter():
                            .join(tomog_techno, Tomog.id==tomog_techno.c.tomog_id)\
                            .join(Technologies, tomog_techno.c.techno_id==Technologies.id)\
                            .join(Image, Tomog.image_id==Image.id)
-                           .group_by(Tomog.id).filter(Manufactures.manufacture_name.in_(masss)))
+                           .group_by(Tomog.id).filter(Manufactures.manufacture_name.in_(masss)).filter(Tomog.tubecount.in_(masss)).filter(Tomog.slicecount >=int(srez_l), Tomog.slicecount <=int(srez_h)))
 
 
 

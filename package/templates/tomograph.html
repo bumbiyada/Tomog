@@ -179,33 +179,44 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <form method="post" action="/tomograph_filter">
-            <div class="form-group form-check">
-                <ul>
-                {% for manufacture in manufactures %}
-                <li><input type="checkbox" name="{{manufacture.manufacture_name}}" class="form-check-input" id="{{manufacture.manufacture_name}}">
-                <label class="form-check-label" for="{{manufacture.manufacture_name}}">{{manufacture.manufacture_name}}</label></li>
-                </ul>
-                {% endfor %}
-                <button type="submit" class="btn btn-primary">Применить фильтр</button>
+      <form method="post" action="/tomograph_filter">
+          <div class="modal-body">
+                    <div class="form-group form-check d-flex">
+                        <div class="col-3">
+                            <h4><b>Производители</b></h4>
+                            <ul>
+                                {% for manufacture in manufactures %}
+                                <li><input type="checkbox" name="{{manufacture.manufacture_name}}" class="form-check-input" id="{{manufacture.manufacture_name}} " checked>
+                                <label class="form-check-label" for="{{manufacture.manufacture_name}}">{{manufacture.manufacture_name}}</label></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="col-4">
+                            <h4 align="center"><b>количество срезов</b></h4>
+                            <ul>
+                                <li>от<input type="number" value=0 name="srez_l" class="form-control" id="srez_l">
+                                <label class="form-check-label" for="srez_l"></label></li>
+                                <li>до<input type="number" value=1024 name="srez_h" class="form-control" id="srez_h">
+                                <label class="form-check-label" for="srez_h"></label></li>
+                            </ul>
+                        </div>
+                        <div class="col-3">
+                            <h4><b>Количество трубок</b></h4>
+                            <ul>
+                                <li><input type="checkbox" name="однотрубочный" class="form-check-input" checked id="trub1">
+                                <label class="form-check-label" for="trub1">однотрубочный</label></li>
+                                <li><input type="checkbox" name="двухтрубочный" class="form-check-input" checked id="trub2">
+                                <label class="form-check-label" for="trub2">двухтрубочный</label></li>
 
-            </div>
-
-
-
-
-
-
-        </form>
-
-
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-        <button type="button" class="btn btn-primary">Применить фильтр</button>
-      </div>
+                            </ul>
+                        </div>
+                    </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            <button type="submit" class="btn btn-primary">Применить фильтр</button>
+          </div>
+      </form>
     </div>
   </div>
 </div>

@@ -90,7 +90,7 @@ class Technologies(db.Model):
     category = db.Column(db.String(128))
 
     def __repr__(self):
-        return '{}'.format(self.technology_name)
+        return '{}'.format(self.technology_name, self.manufacture_id)
 
 
 class Hints(db.Model):
