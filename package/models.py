@@ -124,6 +124,9 @@ class Tomog(db.Model):
     technologies = db.relationship('Technologies', secondary=tomog_techno, backref=db.backref('tomog', lazy='dynamic'))
     image_id = db.Column(db.Integer, db.ForeignKey('image.id'))
 
+    def __repr__(self):
+        return '{}'.format(self.tomog_model)
+
 class Image(db.Model):
 
     id = db.Column(db.Integer(), primary_key=True)

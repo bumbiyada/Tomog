@@ -14,7 +14,11 @@ def about():
 
 @app.route('/tomograph', methods=['GET'])
 def tomograph():
-    return render_template('tomograph.html', manufactures=db.session.query(Manufactures.manufacture_name).all(), tomographs=db.session.query(Tomog.tomog_model, Manufactures.manufacture_name,
+    string = 'Dunlee', 'Spellman'
+    manufacturers = Manufactures.query.add_columns(Manufactures.manufacture_name, Manufactures.id)
+    exception = Manufactures.query.add_columns(Manufactures.manufacture_name, Manufactures.id).filter(Manufactures.manufacture_name.in_(string))
+    total = manufacturers.except_(exception)
+    return render_template('tomograph.html', manufactures=total, tomographs=db.session.query(Tomog.tomog_model, Manufactures.manufacture_name,
                            Tables.table_name, Tables.horizont_range,Tomog.slicecount,Tomog.spiraltype, Tables.max_weight,
                             Manufactures.country, Tomog.id, Generator.generator_name, Tomog.tubecount, Tomog.gantry, Tomog.fov_x, Tomog.fov_z,
                             Tomog.fps, Tomog.slice_thicness, Tomog.spatial_resolution, Tomog.rotation_time, Tomog.room_size,
@@ -32,14 +36,18 @@ def tomograph():
 
 @app.route('/tomograph_filter', methods=['GET','POST'])
 def tomograph_filter():
-    manufacturers = Manufactures.query.all()  # получаем из БД все неймы Производителей
+    string = 'Dunlee', 'Spellman'
+    manufacturers = Manufactures.query.add_columns(Manufactures.manufacture_name, Manufactures.id)
+    exception = Manufactures.query.add_columns(Manufactures.manufacture_name, Manufactures.id).filter(Manufactures.manufacture_name.in_(string))
+    total = manufacturers.except_(exception)
+
     masss = list(request.form.keys())
     print(masss)
     srez_l = request.form.get('srez_l')
     srez_h = request.form.get('srez_h')
     country = request.form.get('country')
     print(country)
-    return render_template('tomograph.html', manufactures=manufacturers, tomographs=db.session.query(Tomog.tomog_model, Manufactures.manufacture_name,
+    return render_template('tomograph.html', manufactures=total, tomographs=db.session.query(Tomog.tomog_model, Manufactures.manufacture_name,
                            Tables.table_name, Tables.horizont_range,Tomog.slicecount,Tomog.spiraltype, Tables.max_weight,
                             Manufactures.country, Tomog.id, Generator.generator_name, Tomog.tubecount, Tomog.gantry, Tomog.fov_x, Tomog.fov_z,
                             Tomog.fps, Tomog.slice_thicness, Tomog.spatial_resolution, Tomog.rotation_time, Tomog.room_size,
@@ -86,7 +94,11 @@ def hints():
 
 @app.route('/technologies', methods=['GET'])
 def technologies():
-    return render_template('technologies.html', manufactures=Manufactures.query.add_columns(Manufactures.manufacture_name).all(),
+    string = 'Dunlee', 'Spellman'
+    manufactures = Manufactures.query.add_columns(Manufactures.manufacture_name, Manufactures.id)
+    exception = Manufactures.query.add_columns(Manufactures.manufacture_name, Manufactures.id).filter(Manufactures.manufacture_name.in_(string))
+    total = manufactures.except_(exception)
+    return render_template('technologies.html', manufactures=total,
                            technologies=Technologies.query.join(Manufactures, Technologies.manufacture_id==Manufactures.id)\
                            .add_columns(Manufactures.manufacture_name, Technologies.technology_name, Technologies.technology_text).all())
 
